@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('secondName')->nullable();
             $table->string('fullName')->nullable();
             $table->string('email');
+            $table->string('folder');
             $table->string('color')->default('#808080');
             $table->string('phone');
             $table->string('contactPhoto')->nullable();

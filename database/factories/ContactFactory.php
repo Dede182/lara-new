@@ -22,6 +22,7 @@ class ContactFactory extends Factory
             'firstName' => $firstName,
             'secondName' => $secondName,
             'fullName' => $firstName . " " . $secondName,
+            'folder'=>$firstName,
             'email' => fake()->safeEmail(),
             'color' => fake()->hexColor(),
             'phone' => '09'.fake()->numerify('##########')

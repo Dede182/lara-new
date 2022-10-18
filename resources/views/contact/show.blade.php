@@ -6,7 +6,7 @@
                 @if($contact->contactPhoto)
                 <img
                  class="w-40 h-40 object-cover rounded-[100%]"
-                 src = "{{ asset('storage/'.$contact->firstName.'/'.$contact->contactPhoto) }}"/>
+                 src = "{{ asset('storage/'.$contact->folder.'/'.$contact->contactPhoto) }}"/>
                  @else
                  <p class=" !m-0 w-40 h-40  flex items-center justify-center text-6xl rounded-[100%]" style="background:{{ $contact->color }}">
                     {{ Str::substr($contact->fullName, 0, 1) }}

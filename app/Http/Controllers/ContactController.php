@@ -45,20 +45,21 @@ class ContactController extends Controller
         $contact->firstName = $request->firstName;
         $contact->secondName = $request->secondName;
         $contact->fullName = $request->firstName . " " . $request->secondName;
+        $contact->folder = $request->firstName;
         $contact->email = $request->email;
         $contact->phone = $request->phone;
 
         if($request->hasFile('contactPhoto')){
                 $newName = uniqid()."contactPhoto.".$request->file('contactPhoto')->extension();
-                Storage::makeDirectory('public/'.$contact->firstName);
-                $request->file('contactPhoto')->storeAs('public/'.$contact->firstName.'/',$newName);
+                Storage::makeDirectory('public/'.$contact->folder);
+                $request->file('contactPhoto')->storeAs('public/'.$contact->folder.'/',$newName);
                 $contact->contactPhoto = $newName;
             }
 
         $contact->save();
 
 
-        return redirect()->route('contact.index');
+        return redirect()->route('contact.index')->with('status',$contact->fullName . ' is created successfully');
     }
 
     /**
@@ -93,22 +94,24 @@ class ContactController extends Controller
     public function update(UpdateContactRequest $request, Contact $contact)
     {
         // return $contact;
-        $contact = new Contact();
+
         $contact->firstName = $request->firstName;
         $contact->secondName = $request->secondName;
+        $contact->fullName = $request->firstName . " " . $request->secondName;
         $contact->email = $request->email;
         $contact->phone = $request->phone;
 
         if($request->hasFile('contactPhoto')){
-                $newName = uniqid()."contactPhoto.".$request->file('contactPhoto')->extension();
-                $request->file('contactPhoto')->storeAs('public',$newName);
-                $contact->contactPhoto = $newName;
-            }
+            $newName = uniqid()."contactPhoto.".$request->file('contactPhoto')->extension();
+            Storage::makeDirectory('public/'.$contact->folder);
+            $request->file('contactPhoto')->storeAs('public/'.$contact->folder.'/',$newName);
+            $contact->contactPhoto = $newName;
+        }
 
-        $contact->save();
+        $contact->update();
 
 
-        return redirect()->route('contact.index');
+        return redirect()->route('contact.index')->with('status',$contact->fullName . ' is updated successfully');
     }
 
     /**
@@ -122,6 +125,6 @@ class ContactController extends Controller
         Storage::delete('public/'.$contact->firstName.'/'.$contact->contactPhoto);
         Storage::deleteDirectory('public/'.$contact->firstName);
         $contact->delete();
-        return redirect()->route('contact.index');
+        return redirect()->route('contact.index')->with('status',$contact->fullName . ' is deleted successfully');
     }
 }

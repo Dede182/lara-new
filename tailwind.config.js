@@ -11,7 +11,7 @@ module.exports = {
         // Customize the color only. (optional)
         color: theme('colors.teal.600'),
         //
-        link : 'py-2 px-2 border-r  text-black no-underline',
+        link : 'py-2 px-3 border-r  text-black no-underline',
         // Customize styling using @apply. (optional)
         wrapper: 'flex justify-center list-reset',
 

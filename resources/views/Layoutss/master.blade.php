@@ -21,7 +21,14 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
 
+            @if (session('status'))
+                showToast("{{ session('status') }}")
+            @endif
+        });
+    </script>
 </body>
 
 </html>

@@ -1,20 +1,23 @@
 import 'flowbite';
 import './bootstrap';
+import Swal from 'sweetalert2'
 
+window.showToast = function(message){
 
-// set the dropdown menu element
-const targetEl = document.getElementById('dropdownMenu');
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'bottom-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
 
-// set the element that trigger the dropdown menu on click
-const triggerEl = document.getElementById('dropdownButton');
-
-// options with default values
-const options = {
-  placement: 'bottom',
-  onHide: () => {
-      console.log('dropdown has been hidden');
-  },
-  onShow: () => {
-      console.log('dropdown has been shown');
-  }
-};
+      Toast.fire({
+        icon: 'success',
+        title: message
+      })
+}
