@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\UpdateContactRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ContactController extends Controller
 {
@@ -43,12 +44,14 @@ class ContactController extends Controller
         $contact = new Contact();
         $contact->firstName = $request->firstName;
         $contact->secondName = $request->secondName;
+        $contact->fullName = $request->firstName . " " . $request->secondName;
         $contact->email = $request->email;
         $contact->phone = $request->phone;
 
         if($request->hasFile('contactPhoto')){
                 $newName = uniqid()."contactPhoto.".$request->file('contactPhoto')->extension();
-                $request->file('contactPhoto')->storeAs('public',$newName);
+                Storage::makeDirectory('public/'.$contact->firstName);
+                $request->file('contactPhoto')->storeAs('public/'.$contact->firstName.'/',$newName);
                 $contact->contactPhoto = $newName;
             }
 
@@ -66,7 +69,7 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
-        //
+        return view('contact.show',compact('contact'));
     }
 
     /**
@@ -116,6 +119,9 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        //
+        Storage::delete('public/'.$contact->firstName.'/'.$contact->contactPhoto);
+        Storage::deleteDirectory('public/'.$contact->firstName);
+        $contact->delete();
+        return redirect()->route('contact.index');
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Contact;
 
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +27,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        View::composer([
+            'Layoutss.sidebar',
+            'contact.index'
+        ], function ($view) {
+            return $view->with('contactCount',Contact::latest("id")->get());
+        });
+
         Paginator::useBootstrap();
     }
 }

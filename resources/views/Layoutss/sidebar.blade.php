@@ -1,15 +1,14 @@
 <div class="flex flex-col py-2 px-4  space-y-8 ">
    <div class="">
         <a href ="{{route('contact.create')}}">
-            <button class="px-3 py-2 gap-x-2 flex hover:opacity-75 items-center bg-white shadow-md rounded-3xl justify-center">
+            <button class="px-4 pr-6 py-2 gap-x-2 flex hover:opacity-75 items-center bg-white shadow-lg rounded-3xl justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                   </svg>
 
-                <p class="text-xl">Create contact</p>
+                <p class="text-lg">Create contact</p>
             </button>
         </a>
-
     </div>
     <div class="flex">
         <div class="w-full">
@@ -22,7 +21,7 @@
                         <p class="font-bold">Contact</p>
 
                     </a>
-                    <p>3</p>
+                    <p class="font-medium font-mono">  {{ $contactCount->count() }}</p>
                 </li>
             </ul>
         </div>

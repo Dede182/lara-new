@@ -16,11 +16,15 @@ class ContactFactory extends Factory
      */
     public function definition()
     {
+        $firstName = fake()->firstName();
+        $secondName = fake()->lastName();
         return [
-            'firstName' => fake()->name(),
-            'secondName' => 'second',
+            'firstName' => $firstName,
+            'secondName' => $secondName,
+            'fullName' => $firstName . " " . $secondName,
             'email' => fake()->safeEmail(),
-            'phone' => fake()->numerify('##########')
+            'color' => fake()->hexColor(),
+            'phone' => '09'.fake()->numerify('##########')
         ];
     }
 }
