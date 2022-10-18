@@ -24,7 +24,11 @@ class UpdateContactRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'firstName' => 'required|min:2',
+            'secondName' => 'required|min:2',
+            'email' => 'required|email',
+            'phone' => 'required|numeric|min:6',
+            'contactPhoto' => 'nullable|file|mimes:png,jpg|'
         ];
     }
 }

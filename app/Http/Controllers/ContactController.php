@@ -15,7 +15,9 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::latest('id')->get();
+        $contacts = Contact::latest('id')
+        ->paginate(10)
+        ->withQueryString();
         return view('contact.index',compact('contacts'));
     }
 
@@ -75,7 +77,7 @@ class ContactController extends Controller
      */
     public function edit(Contact $contact)
     {
-        //
+        return view('contact.edit',compact('contact'));
     }
 
     /**
@@ -87,7 +89,23 @@ class ContactController extends Controller
      */
     public function update(UpdateContactRequest $request, Contact $contact)
     {
-        //
+        // return $contact;
+        $contact = new Contact();
+        $contact->firstName = $request->firstName;
+        $contact->secondName = $request->secondName;
+        $contact->email = $request->email;
+        $contact->phone = $request->phone;
+
+        if($request->hasFile('contactPhoto')){
+                $newName = uniqid()."contactPhoto.".$request->file('contactPhoto')->extension();
+                $request->file('contactPhoto')->storeAs('public',$newName);
+                $contact->contactPhoto = $newName;
+            }
+
+        $contact->save();
+
+
+        return redirect()->route('contact.index');
     }
 
     /**
