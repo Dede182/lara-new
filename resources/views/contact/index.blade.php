@@ -33,7 +33,7 @@
                         <th scope="row" class="py-4 px-6 gap-x-2 font-medium flex group-hover:bg-slate-200 text-gray-900 whitespace-nowrap">
                             @if($contact->contactPhoto)
                             <img src = "{{ asset('storage/'.$contact->folder.'/'.$contact->contactPhoto) }}"
-                            class="w-7 h-7  rounded-[100%]"
+                            class="w-7 h-7 object-cover rounded-[100%]"
                             alt ="p"
                             />
                             @else
