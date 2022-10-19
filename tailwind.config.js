@@ -22,6 +22,9 @@ module.exports = {
 
         },
     }),
+    fontFamily:{
+        'sans': ['Merriweather', 'sans-serif'],
+    },
     extend:{
 
     }

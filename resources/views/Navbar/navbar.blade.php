@@ -1,8 +1,8 @@
 <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 w-full">
     <div class=" flex w-full justify-between items-center ">
         <div class="flex items-center gap-x-3 w-1/4">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                stroke="currentColor" class="w-8 h-8 font-bold ">
+            <svg xmlns="http://www.w3.org/2000/svg" id ="sidebar" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                stroke="currentColor" class="w-8 h-8 font-bold cursor-pointer">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
 

@@ -55,7 +55,7 @@
 
                         </td>
                         <td class="py-4 px-6 group-hover:bg-slate-200 z-3">
-                            <div class="flex items-center gap-x-3">
+                            <div class="flex hidden group-hover:flex items-center gap-x-3">
                                 <a href="{{ route('contact.edit', $contact->id) }}">
 
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

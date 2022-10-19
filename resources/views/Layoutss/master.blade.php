@@ -12,11 +12,11 @@
         <div class="">
             @include('Navbar.navbar')
         </div>
-        <div class="flex px-2 sm:px-4  py-2.5">
-            <div class="w-1/6">
+        <div class="flex px-2 sm:px-4 transition duration-1000 ease-in-out py-2.5">
+            <div class="" id = "side">
                 @include('Layoutss.sidebar')
             </div>
-            <div class="w-5/6">
+            <div class="w-4/7 transition duration-1000 ease-in-out" id = "content">
                 @yield('content')
             </div>
         </div>
@@ -28,7 +28,29 @@
                 showToast("{{ session('status') }}")
             @endif
         });
+        const side = document.getElementById('side');
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('content')
+        const sideorg = side.style.width;
+        const contentorg = content.style.width;
+        let toggle = true;
+        sidebar.addEventListener('click',(e)=>{
+            toggle = !toggle;
+
+            if(toggle){
+                side.style.width = sideorg;
+                side.style.transform = "translate(0px)"
+                side.classList.add('w-3/7')
+            }
+            else{
+                side.style.transform = "translate(-200px)"
+                side.style.width = '0px';
+                content.style.width = '100%';
+
+            }
+        })
     </script>
+
 </body>
 
 </html>
