@@ -16,6 +16,7 @@ use App\Http\Controllers\ContactController;
 Route::get('/', function () {
     return view('Test');
 });
-
+Route::get('contacts/export/', [ContactController::class, 'export'])->name('contact.export');
+Route::get('contacts/import/', [ContactController::class, 'import'])->name('contact.import');
 Route::post('/contact/bulk/',[ContactController::class,'bulk'])->name('contact.bulk');
 Route::resource('contact', ContactController::class);

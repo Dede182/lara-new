@@ -2,3 +2,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities{
+    .hoveron {
+        @apply hover:bg-blue-400 transition hover:shadow-2xl
+    }
+}

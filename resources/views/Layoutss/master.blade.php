@@ -12,11 +12,11 @@
         <div class="">
             @include('Navbar.navbar')
         </div>
-        <div class="flex px-2 sm:px-4 transition duration-1000 ease-in-out py-2.5">
-            <div class="" id = "side">
+        <div class="flex px-2 sm:px-4  ease-in-out py-2.5">
+            <div class="w-1/4 transition duration-500" id = "side" >
                 @include('Layoutss.sidebar')
             </div>
-            <div class="w-full transition duration-1000 ease-in-out" id = "content">
+            <div class="w-full transition duration-1000 origin-right ease-in-out" id = "content">
                 @yield('content')
             </div>
         </div>
@@ -40,12 +40,13 @@
             if(toggle){
                 side.style.width = sideorg;
                 side.style.transform = "translate(0px)"
-                side.classList.add('w-3/7')
+                side.classList.remove('w-0')
+                side.classList.add('w-1/4');
             }
             else{
-                side.style.transform = "translate(-200px)"
+                side.style.transform = "translate(-800px)"
                 side.style.width = '0px';
-
+                side.classList.add('w-0');
 
             }
         })

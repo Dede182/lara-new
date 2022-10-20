@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Exports\ContactsExport;
+use App\Exports\ContactsViewExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\UpdateContactRequest;
-use Illuminate\Support\Arr;
+use App\Imports\ContactImport;
+
+// use Maatwebsite\Excel\Excel;
+
 
 class ContactController extends Controller
 {
@@ -24,6 +31,15 @@ class ContactController extends Controller
         return view('contact.index',compact('contacts'));
     }
 
+    public function export(){
+        return Excel::download(new ContactsExport,'contacts.csv');
+        // return (new ContactsExport)->download('contacts.csv',Excel::CSV, ['Content-Type' => 'text/csv']);
+        // return Excel::download(new ContactsViewExport,'contacts.csv');
+    }
+    public function import(){
+        Excel::import(new ContactImport,'contacts.csv');
+        return redirect('/')->with('success','All Good!');
+    }
     /**
      * Show the form for creating a new resource.
      *
