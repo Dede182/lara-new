@@ -16,7 +16,7 @@
             <div class="" id = "side">
                 @include('Layoutss.sidebar')
             </div>
-            <div class="w-4/7 transition duration-1000 ease-in-out" id = "content">
+            <div class="w-full transition duration-1000 ease-in-out" id = "content">
                 @yield('content')
             </div>
         </div>
@@ -45,7 +45,7 @@
             else{
                 side.style.transform = "translate(-200px)"
                 side.style.width = '0px';
-                content.style.width = '100%';
+
 
             }
         })
