@@ -1,10 +1,17 @@
 @extends('Layoutss.master')
 @section('content')
     <div class="relative">
+        <form  action="{{ route('contact.bulk') }}" id="checkForm" class="mb-3" method="POST">
+            @csrf
+        </form>
+        <button id ="submit"  class="px-4 py-2 text-sm bg-blue-400 hover:bg-blue-300 transition duration-300 text-white rounded-xl" >Delete</button>
         <table class="w-full text-sm text-left text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
 
                 <tr>
+                    <th scope ="col" class="py-2 px-6">
+
+                    </th>
                     <th scope="col" class="py-3 px-6">
                         Name
                     </th>
@@ -29,8 +36,10 @@
             <tbody>
                 @forelse ($contacts as $contact)
                     <tr  class="bg-white border-b group relative ">
-
-                        <th scope="row" class="py-4 px-6 gap-x-2 font-medium flex group-hover:bg-slate-200 text-gray-900 whitespace-nowrap">
+                        <td class="py-4 px-6 group-hover:bg-slate-200">
+                            <input type="checkbox"  name="check[]" form="checkForm" value = "{{ $contact->id }}">
+                        </td>
+                        <th scope="row" class="py-4 px-6 gap-x-2 font-medium items-center flex group-hover:bg-slate-200 text-gray-900 whitespace-nowrap">
                             @if($contact->contactPhoto)
                             <img src = "{{ asset('storage/'.$contact->folder.'/'.$contact->contactPhoto) }}"
                             class="w-7 h-7 object-cover rounded-[100%]"
@@ -124,3 +133,13 @@
         {{ $contacts->onEachSide(5)->links() }}
     </div>
 @endsection
+
+@push('script')
+<script>
+    const submit = document.getElementById('submit')
+    const formId = document.getElementById('checkForm')
+    submit.addEventListener('click',()=>{
+        checkSure(formId);
+    })
+</script>
+@endpush

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\UpdateContactRequest;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Arr;
 
 class ContactController extends Controller
 {
@@ -40,7 +42,7 @@ class ContactController extends Controller
      */
     public function store(StoreContactRequest $request)
     {
-        // return $request;
+        // return $request->contactPhoto;
         $contact = new Contact();
         $contact->firstName = $request->firstName;
         $contact->secondName = $request->secondName;
@@ -126,5 +128,17 @@ class ContactController extends Controller
         Storage::deleteDirectory('public/'.$contact->firstName);
         $contact->delete();
         return redirect()->route('contact.index')->with('status',$contact->fullName . ' is deleted successfully');
+    }
+
+    public function bulk(Request $request){
+
+        $arr = $request->check;
+        $int = Arr::map($arr,function($value,$key){
+            return (int)$value;
+        });
+
+        Contact::destroy($int);
+        return redirect()->route('contact.index')->with('status',count($arr) . ' contacts is deleted');
+
     }
 }

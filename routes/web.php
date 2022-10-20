@@ -17,5 +17,5 @@ Route::get('/', function () {
     return view('Test');
 });
 
-
+Route::post('/contact/bulk/',[ContactController::class,'bulk'])->name('contact.bulk');
 Route::resource('contact', ContactController::class);
