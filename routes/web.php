@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,9 +15,15 @@ use App\Http\Controllers\ContactController;
 */
 
 Route::get('/', function () {
-    return view('Test');
+    return view('welcome');
 });
-Route::get('contacts/export/', [ContactController::class, 'export'])->name('contact.export');
-Route::get('contacts/import/', [ContactController::class, 'import'])->name('contact.import');
-Route::post('/contact/bulk/',[ContactController::class,'bulk'])->name('contact.bulk');
-Route::resource('contact', ContactController::class);
+
+Route::middleware(['auth','verified'])->group(function(){
+    Route::resource('contact',ContactController::class);
+    Route::get('contacts/export/', [ContactController::class, 'export'])->name('contact.export');
+    Route::post('contacts/import/', [ContactController::class, 'import'])->name('contact.import');
+    Route::post('/contact/bulk/',[ContactController::class,'bulk'])->name('contact.bulk');
+});
+
+
+require __DIR__.'/auth.php';

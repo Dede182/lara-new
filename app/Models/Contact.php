@@ -8,5 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Contact extends Model
 {
     use HasFactory;
-    protected $fillable  = ['firstName','secondName','fullName','folder','email','phone'];
+    protected $fillable  = ['firstName','secondName','fullName','folder','email','phone','color','contactPhoto'];
+
+    public function scopeSearch($q){
+        $q->when(request('search'),function($q){
+            $search = request('search');
+            $q->orWhere('fullName' ,'like',"%$search%")
+            ->orWhere('phone','like',"%$search%");
+        });
+    }
+
 }

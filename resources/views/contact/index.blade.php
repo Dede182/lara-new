@@ -1,16 +1,16 @@
 @extends('Layoutss.master')
 @section('content')
-    <div class="relative">
-        <form  action="{{ route('contact.bulk') }}" id="checkForm" class="mb-3" method="POST">
+    <div class="relative w-full">
+        <form  action="{{ route('contact.bulk') }}" id="checkForm" class="mb-3 hidden" method="POST">
             @csrf
         </form>
-        <button id ="submit"  class="px-4 py-2 text-sm bg-blue-400 hover:bg-blue-300 transition duration-300 text-white rounded-xl" >Delete</button>
-        <table class="w-full text-sm text-left text-gray-500">
+        <button id ="submit"  class="px-4 py-2 my-3 text-sm bg-blue-400 hover:bg-blue-300 transition duration-300 text-white rounded-xl" >Delete</button>
+        <table class="w-full  {{ $contacts->count() > 0 ? '' : 'hidden' }} text-sm text-left text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
 
                 <tr>
                     <th scope ="col" class="py-2 px-6">
-
+                        <input type="checkbox" name = "checkAll" id = "checkAll"/>
                     </th>
                     <th scope="col" class="py-3 px-6">
                         Name
@@ -64,9 +64,8 @@
 
                         </td>
                         <td class="py-4 px-6 group-hover:bg-slate-200 z-3">
-                            <div class="flex hidden group-hover:flex items-center gap-x-3">
+                            <div class=" hidden group-hover:flex items-center gap-x-3">
                                 <a href="{{ route('contact.edit', $contact->id) }}">
-
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -124,13 +123,20 @@
                     </tr>
 
                 @empty
+
                 @endforelse
 
 
             </tbody>
         </table>
+        @if ($contacts->count() === 0)
+                <p class="text-center text-xl shadow-sm">Nothing found</p>
+        @endif
         <div class="mt-10"></div>
-        {{ $contacts->onEachSide(5)->links() }}
+        <div class="flex items-start">
+            {{ $contacts->onEachSide(5)->links() }}
+
+        </div>
     </div>
 @endsection
 
@@ -140,6 +146,21 @@
     const formId = document.getElementById('checkForm')
     submit.addEventListener('click',()=>{
         checkSure(formId);
+    })
+    const checkAll = document.getElementById('checkAll')
+    const checks = document.getElementsByName('check[]');
+    console.log(checks);
+    checkAll.addEventListener('change',function(){
+        if(this.checked){
+           for(let i= 0;i< checks.length;i++){
+                checks[i].checked = true;
+           }
+        }
+        else{
+            for(let i= 0;i< checks.length;i++){
+                checks[i].checked = false;
+           }
+        }
     })
 </script>
 @endpush

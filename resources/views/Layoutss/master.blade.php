@@ -7,13 +7,13 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
-    <div class="">
+<body class="w-fit xl:w-full">
+    <div class="w-full">
         <div class="">
             @include('Navbar.navbar')
         </div>
-        <div class="flex px-2 sm:px-4  ease-in-out py-2.5">
-            <div class="w-1/4 transition duration-500" id = "side" >
+        <div class="flex px-2 sm:px-4  w-full ease-in-out py-2.5">
+            <div class="w-1/4  transition duration-500" id = "side" >
                 @include('Layoutss.sidebar')
             </div>
             <div class="w-full transition duration-1000 origin-right ease-in-out" id = "content">

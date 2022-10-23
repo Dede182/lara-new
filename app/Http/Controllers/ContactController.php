@@ -25,20 +25,25 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::latest('id')
+
+        $contacts = Contact::
+        search()
+        ->latest('id')
         ->paginate(10)
         ->withQueryString();
         return view('contact.index',compact('contacts'));
     }
 
     public function export(){
-        return Excel::download(new ContactsExport,'contacts.csv');
+        Excel::store(new ContactsExport,'contactss.csv');
+        return Excel::download(new ContactsExport,'contactss.csv');
         // return (new ContactsExport)->download('contacts.csv',Excel::CSV, ['Content-Type' => 'text/csv']);
         // return Excel::download(new ContactsViewExport,'contacts.csv');
     }
-    public function import(){
-        Excel::import(new ContactImport,'contacts.csv');
-        return redirect('/')->with('success','All Good!');
+    public function import(Request $request){
+
+        Excel::import(new ContactImport,$request->importFile);
+        return redirect()->route('contact.index')->with('success','All Good!');
     }
     /**
      * Show the form for creating a new resource.
@@ -149,10 +154,23 @@ class ContactController extends Controller
     public function bulk(Request $request){
 
         $arr = $request->check;
+
+        $contactsId = [];
+        $contacts = [];
+        foreach($arr as $key=>$value){
+            $contactsId[$key] = (int)$value;
+        }
+        foreach($contactsId as $key=>$value){
+            $contacts[$key] = Contact::findOrFail($value);
+        }
+        foreach($contacts as $key=>$value){
+            Storage::deleteDirectory('public/'.$value->firstName);
+        }
         $int = Arr::map($arr,function($value,$key){
             return (int)$value;
         });
 
+        // return $contacts;
         Contact::destroy($int);
         return redirect()->route('contact.index')->with('status',count($arr) . ' contacts is deleted');
 

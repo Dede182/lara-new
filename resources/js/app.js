@@ -1,3 +1,6 @@
+import './bootstrap';
+
+import Alpine from 'alpinejs';
 import 'flowbite';
 import './bootstrap';
 import Swal from 'sweetalert2'
@@ -55,3 +58,6 @@ window.checkSure = function(formId){
       })
 
 }
+window.Alpine = Alpine;
+
+Alpine.start();

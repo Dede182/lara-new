@@ -1,36 +1,23 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./resources/**/*.blade.php",
-    "./resources/**/*.js",
-    './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-    "./node_modules/flowbite/**/*.js"
-  ],
-  theme: {
-    pagination: theme => ({
-        // Customize the color only. (optional)
-        color: theme('colors.teal.600'),
-        //
-        link : 'py-2 px-3 border-r  text-black no-underline',
-        // Customize styling using @apply. (optional)
-        wrapper: 'flex justify-center list-reset',
+    content: [
+        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        './storage/framework/views/*.php',
+        './resources/views/**/*.blade.php',
+        "./node_modules/flowbite/**/*.js"
+    ],
 
-        // Customize styling using CSS-in-JS. (optional)
-        wrapper: {
-            'display': 'flex',
-            'justify-items': 'center',
-
+    theme: {
+        extend: {
+            fontFamily:{
+                'sans': ['Merriweather', 'sans-serif'],
+            },
         },
-    }),
-    fontFamily:{
-        'sans': ['Merriweather', 'sans-serif'],
     },
-    extend:{
 
-    }
-},
-  plugins: [
+    plugins: [require('@tailwindcss/forms'),
     require('flowbite/plugin'),
-    require('tailwindcss-plugins/pagination'),
-  ],
-}
+    require('tailwindcss-plugins/pagination')],
+};

@@ -1,7 +1,10 @@
 <?php
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\auht\ApiAuthController;
+use App\Http\Controllers\Api\ContactApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +17,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function(){
+    Route::apiResource('contact',ContactApiController::class);
+    Route::post('contact/bulk',[ContactApiController::class,'bulk'])->name('api.contactbulk');
+    Route::get('/logout',[ApiAuthController::class,'logout'])->name('api.logout');
 });
+
+Route::post('/register',[ApiAuthController::class,'register'])->name('api.register');
+Route::post('/login',[ApiAuthController::class,'login'])->name('api.login');
+
+
+

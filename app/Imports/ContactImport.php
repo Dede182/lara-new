@@ -20,6 +20,7 @@ class ContactImport implements ToModel
            'fullName' => $row[3],
            'email' => $row[4],
            'folder'=>$row[5],
+           'color' => $row[6],
             'phone'=>$row[7]
         ]);
     }
