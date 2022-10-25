@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Imports\ContactImport;
 use App\Exports\ContactsExport;
 use App\Exports\ContactsViewExport;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\UpdateContactRequest;
-use App\Imports\ContactImport;
+use Illuminate\Support\Facades\Gate;
 
 // use Maatwebsite\Excel\Excel;
 
@@ -28,6 +30,7 @@ class ContactController extends Controller
 
         $contacts = Contact::
         search()
+        ->where('user_id','=',Auth::id())
         ->latest('id')
         ->paginate(10)
         ->withQueryString();
@@ -93,6 +96,7 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
+        Gate::authorize('view',$contact);
         return view('contact.show',compact('contact'));
     }
 
@@ -104,6 +108,7 @@ class ContactController extends Controller
      */
     public function edit(Contact $contact)
     {
+        Gate::authorize('update',$contact);
         return view('contact.edit',compact('contact'));
     }
 
@@ -117,7 +122,7 @@ class ContactController extends Controller
     public function update(UpdateContactRequest $request, Contact $contact)
     {
         // return $contact;
-
+        Gate::authorize('update',$contact);
         $contact->firstName = $request->firstName;
         $contact->secondName = $request->secondName;
         $contact->fullName = $request->firstName . " " . $request->secondName;
@@ -145,14 +150,15 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
+        Gate::authorize('delete',$contact);
         Storage::delete('public/'.$contact->firstName.'/'.$contact->contactPhoto);
         Storage::deleteDirectory('public/'.$contact->firstName);
         $contact->delete();
         return redirect()->route('contact.index')->with('status',$contact->fullName . ' is deleted successfully');
     }
 
-    public function bulk(Request $request){
-
+    public function bulk(Request $request,Contact $contact){
+        Gate::authorize('delete',$contact);
         $arr = $request->check;
 
         $contactsId = [];

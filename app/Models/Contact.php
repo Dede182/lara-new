@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Contact extends Model
 {
     use HasFactory;
-    protected $fillable  = ['firstName','secondName','fullName','folder','email','phone','color','contactPhoto'];
+    protected $fillable  = ['firstName','secondName','fullName','folder','email','phone','color','contactPhoto','user_id'];
 
     public function scopeSearch($q){
         $q->when(request('search'),function($q){

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,7 +26,8 @@ class ContactFactory extends Factory
             'folder'=>$firstName,
             'email' => fake()->safeEmail(),
             'color' => fake()->hexColor(),
-            'phone' => '09'.fake()->numerify('##########')
+            'phone' => '09'.fake()->numerify('##########'),
+            'user_id' => User::inRandomOrder()->first()
         ];
     }
 }

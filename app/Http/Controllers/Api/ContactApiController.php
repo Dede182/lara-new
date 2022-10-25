@@ -6,6 +6,8 @@ use App\Models\Contact;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class ContactApiController extends Controller
@@ -19,6 +21,7 @@ class ContactApiController extends Controller
     {
         $contacts = Contact::
         search()
+        ->where('user_id','=',Auth::id())
         ->latest('id')
         ->paginate(10)
         ->withQueryString();
@@ -35,7 +38,7 @@ class ContactApiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Contact $contact)
     {
         $request->validate([
             'firstName' => "required",
@@ -60,6 +63,7 @@ class ContactApiController extends Controller
             'folder' => $request->firstName,
             'phone' => $request->phone,
             'contactPhoto' => $some,
+            'user_id' => Auth::user()->id
         ]);
 
         return response()->json([
@@ -75,9 +79,9 @@ class ContactApiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Contact $contact)
     {
-        $contact = Contact::findOrFail($id);
+        Gate::authorize('view',$contact);
         return response()->json([
             'success' => true,
             'message' => "contact is found",
@@ -92,8 +96,10 @@ class ContactApiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Contact $contact)
     {
+
+        Gate::authorize('update',$contact);
         $request->validate([
             'firstName' => "",
             'secondName' => "nullable",
@@ -101,7 +107,6 @@ class ContactApiController extends Controller
             'phone' => 'numeric|min:3',
             'contactPhoto' => 'file|mimes:png,jpg,max:2000'
         ]);
-        $contact = Contact::findOrFail($id);
         if($request->has('firstName')){
             $contact->firstName = $request->firstName;
         }
@@ -133,9 +138,9 @@ class ContactApiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Contact $contact)
     {
-        $contact = Contact::findOrFail($id);
+        Gate::authorize('delete',$contact);
         Storage::delete('public/'.$contact->firstName.'/'.$contact->contactPhoto);
         Storage::deleteDirectory('public/'.$contact->firstName);
         $contact->delete();
@@ -146,7 +151,7 @@ class ContactApiController extends Controller
     }
 
     public function bulk(Request $request){
-        // return $request;
+
         $arr = $request->check;
         $contactsId = [];
         $contacts = [];

@@ -10,6 +10,7 @@
             </button>
         </a>
     </div>
+
     <div class="flex">
         <div class="w-full">
             <ul class="">
@@ -22,7 +23,7 @@
                         <p class="font-bold">Contact</p>
 
                     </a>
-                    <p class="font-medium font-mono">  {{ $contactCount->count() }}</p>
+                    <p class="font-medium font-mono">  {{ Auth::user()->contacts()->count() }}</p>
                 </li>
                 <li class="flex gap-x-3 w-full justify-between  mb-8 cursor-pointer">
                     <a href = "{{route('contact.export')}}" class="flex gap-x-3  px-3 py-2 rounded-lg hoveron ">
