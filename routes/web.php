@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ContactDupliacteController;
+use App\Http\Controllers\ContactDuplicateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +25,8 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::get('contacts/export/', [ContactController::class, 'export'])->name('contact.export');
     Route::post('contacts/import/', [ContactController::class, 'import'])->name('contact.import');
     Route::post('/contact/bulk/',[ContactController::class,'bulk'])->name('contact.bulk');
+    Route::get('/contacts/duplicate/{contact}',[ContactDuplicateController::class,'duplicate'])->name('contact.duplicate');
+    Route::post('/contact/bulkDuplicate',[ContactDuplicateController::class,'bulkDuplicate'])->name('contact.bulkDuplicate');
 });
 
 
