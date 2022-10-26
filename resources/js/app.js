@@ -41,7 +41,7 @@ window.emailInput = async function(sendForm,receiver){
 }
 
 
-window.checkSure = function(formId){
+window.checkSure = function(formId,yes){
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
           confirmButton: 'btn btn-success',
@@ -55,7 +55,7 @@ window.checkSure = function(formId){
         text: "You won't be able to revert this!",
         icon: 'question',
         showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
+        confirmButtonText: yes,
         cancelButtonText: 'No, cancel!',
         reverseButtons: true
       }).then((result) => {
@@ -67,7 +67,6 @@ window.checkSure = function(formId){
         ) {
           swalWithBootstrapButtons.fire(
             'Cancelled',
-            'Your imaginary file is safe :)',
             'error'
           )
         }

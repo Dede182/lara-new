@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string("sender");
             $table->string('receiver');
             $table->json("message");
-            $table->foreignId('receiver_id');
+            $table->foreignId('receiver_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('sender_id')->constrained()->cascadeOnDelete();
             $table->enum('status',['accepted','rejected'])->nullable();
             $table->timestamps();
         });

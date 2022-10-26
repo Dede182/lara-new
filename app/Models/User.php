@@ -12,7 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $with = ['contacts'];
+    protected $with = ['contacts','senders','receivers'];
 
     /**
      * The attributes that are mass assignable.
@@ -47,5 +47,11 @@ class User extends Authenticatable
 
     public function contacts(){
         return $this->hasMany(Contact::class);
+    }
+    public function receivers(){
+        return $this->hasMany(Receiver::class);
+    }
+    public function senders(){
+        return $this->hasMany(Sender::class);
     }
 }

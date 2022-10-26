@@ -7,7 +7,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Imports\ContactImport;
 use App\Exports\ContactsExport;
-use App\Exports\ContactsViewExport;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;

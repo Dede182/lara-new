@@ -1,5 +1,6 @@
 @extends('Layoutss.master')
 @section('content')
+
     <div class="relative w-full">
         <button id="dropdownDefault" data-dropdown-toggle="addition" class="text-black "
             type="button"> <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -230,12 +231,12 @@
 
         submit.addEventListener('click', () => {
             formId.setAttribute('action', "{{ route('contact.bulk') }}")
-            checkSure(formId);
+            checkSure(formId,'yes,delete it');
         })
 
         bulkDupli.addEventListener('click', () => {
             formId.setAttribute('action', "{{ route('contact.bulkDuplicate') }}")
-            checkSure(formId);
+            checkSure(formId,'Duplicate them');
         })
 
 

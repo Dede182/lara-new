@@ -29,7 +29,9 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::get('/contacts/duplicate/{contact}',[ContactDuplicateController::class,'duplicate'])->name('contact.duplicate');
     Route::post('/contact/bulkDuplicate',[ContactDuplicateController::class,'bulkDuplicate'])->name('contact.bulkDuplicate');
     Route::post('/contact/send',[SendController::class,'send'])->name('contact.send');
-    Route::get('/contact/list',[SendController::class,'index']);
+    Route::get('noti',[SendController::class,'noti'])->name('noti');
+    Route::get('noti/{id}/accept/{contact}',[SendController::class,'accept'])->name('noti.accept');
+    Route::get('noti/{id}',[SendController::class,'reject'])->name('noti.reject');
 });
 
 
