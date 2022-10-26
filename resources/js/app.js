@@ -25,6 +25,22 @@ window.showToast = function(message){
       })
 }
 
+window.emailInput = async function(sendForm,receiver){
+    const { value: email } = await Swal.fire({
+        title: 'Input email address',
+        input: 'email',
+        inputLabel: 'Your email address',
+        inputPlaceholder: 'Enter your email address'
+      })
+
+      if (email) {
+
+        receiver.value = email;
+        sendForm.submit();
+      }
+}
+
+
 window.checkSure = function(formId){
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {

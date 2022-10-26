@@ -142,11 +142,10 @@
                                             <a href="{{ route('contact.show', $contact->id) }}"
                                                 class="flex p-2 gap-x-3 hover:bg-gray-100 d ark:hover:bg-gray-600 dark:hover:text-white">
                                                 @csrf
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                                                </svg>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                                  </svg>
+
                                                 <button>Info</button>
                                             </a>
                                         </li>
@@ -166,6 +165,18 @@
 
                                                 <button>Duplicate</button>
                                             </form>
+                                        </li>
+                                        <li>
+
+                                            <div id ="{{ $contact->id }}"
+                                                class="send flex p-2 gap-x-3 hover:bg-gray-100 d ark:hover:bg-gray-600 dark:hover:text-white">
+                                                @csrf
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                                                  </svg>
+
+                                                <button>Send</button>
+                                            </div>
                                         </li>
                                     </ul>
                                 </div>
@@ -189,14 +200,33 @@
             {{ $contacts->onEachSide(5)->links() }}
 
         </div>
+        <form id="sendForm" action="{{ route('contact.send') }}" class="hidden" method="POST">
+            @csrf
+            <input id = "receiver" type="email" name = "receiver" value = ""/>
+            <input id = "contactId" type="email" name = "contactId" value = ""/>
+        </form>
     </div>
 @endsection
 
 @push('script')
     <script>
+
         const submit = document.getElementById('submit')
         const bulkDupli = document.getElementById('bulkDupli');
         const formId = document.getElementById('checkForm')
+        const send = document.querySelectorAll('.send')
+        const sendForm = document.getElementById('sendForm')
+        const receiver = document.getElementById('receiver')
+        const contactId = document.getElementById('contactId')
+
+        send.forEach(se => {
+            se.addEventListener('click',(e)=>{
+            const contactid = se.id;
+            contactId.value = contactid;
+            emailInput(sendForm,receiver);
+        })
+        });
+
 
         submit.addEventListener('click', () => {
             formId.setAttribute('action', "{{ route('contact.bulk') }}")
@@ -209,7 +239,7 @@
         })
 
 
-
+        // check all
         const checkAll = document.getElementById('checkAll')
         const checks = document.getElementsByName('check[]');
         checkAll.addEventListener('change', function() {

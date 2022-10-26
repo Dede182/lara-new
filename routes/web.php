@@ -3,6 +3,7 @@
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContactDupliacteController;
 use App\Http\Controllers\ContactDuplicateController;
+use App\Http\Controllers\SendController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,8 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::post('/contact/bulk/',[ContactController::class,'bulk'])->name('contact.bulk');
     Route::get('/contacts/duplicate/{contact}',[ContactDuplicateController::class,'duplicate'])->name('contact.duplicate');
     Route::post('/contact/bulkDuplicate',[ContactDuplicateController::class,'bulkDuplicate'])->name('contact.bulkDuplicate');
+    Route::post('/contact/send',[SendController::class,'send'])->name('contact.send');
+    Route::get('/contact/list',[SendController::class,'index']);
 });
 
 
