@@ -32,6 +32,7 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::get('noti',[SendController::class,'noti'])->name('noti');
     Route::get('noti/{id}/accept/{contact}',[SendController::class,'accept'])->name('noti.accept');
     Route::get('noti/{id}',[SendController::class,'reject'])->name('noti.reject');
+    Route::post('/noti/multiple',[SendController::class,'sendMultiple'])->name('noti.multiple');
 });
 
 

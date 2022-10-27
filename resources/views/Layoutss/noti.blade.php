@@ -4,7 +4,7 @@
 
         @forelse ($sender as $user)
             <div id="toast-notification"
-                class="p-4 w-full  shadow-lg text-gray-900 bg-white rounded-lg dark:bg-gray-800 dark:text-gray-300"
+                class="p-4 w-full  shadow-lg text-gray-900 bg-gray-50 rounded-lg dark:bg-gray-800 dark:text-gray-300"
                 role="alert" bis_skin_checked="1">
                 <div class="flex items-center" bis_skin_checked="1">
                     <div class="inline-block relative shrink-0" bis_skin_checked="1">
@@ -55,7 +55,7 @@
                 <div class="mt-8 flex items-center gap-x-5 flex-wrap gap-y-4">
                     @forelse ($last as $key=>$noti)
                         <div id="toast-interactive"
-                            class="p-4 w-full flex items-center justify-between  text-gray-500 bg-slate-50 rounded-lg shadow-lg  dark:text-gray-400"
+                            class="p-4 w-full flex items-center justify-between  text-gray-500 bg-gray-100 rounded-lg shadow-lg  dark:text-gray-400"
                             role="alert" bis_skin_checked="1">
                             <div class="flex" bis_skin_checked="1">
                                 <div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-blue-dark:text-blue-300"
@@ -108,7 +108,15 @@
 
             </div>
         @empty
+            <div class="flex flex-col w-full justify-center">
+                <lottie-player class="mx-auto" src="{{ asset('blue_bell_cat.json') }}"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player>
+                <p class="text-gray-600 text-xl font-bold text-center">You're up to date!</p>
+            </div>
         @endforelse
     </div>
-    </div>
+</div>
 @endsection
+@push('script')
+
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+@endpush

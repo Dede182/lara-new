@@ -34,7 +34,6 @@ window.emailInput = async function(sendForm,receiver){
       })
 
       if (email) {
-
         receiver.value = email;
         sendForm.submit();
       }

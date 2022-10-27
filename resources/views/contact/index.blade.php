@@ -30,11 +30,18 @@
                       </button>
 
                 </li>
+                <li class="py-1 hover:text-black font-bold transition-all">
+                    <button id="sendContacts"
+                    class="text-center w-full ">
+                    Send
+                      </button>
 
+                </li>
             </ul>
         </div>
         <form id="checkForm" class="mb-3 hidden" method="POST">
             @csrf
+            <input id = "recei" type="email" name = "recei" value = ""/>
         </form>
 
 
@@ -219,6 +226,7 @@
         const sendForm = document.getElementById('sendForm')
         const receiver = document.getElementById('receiver')
         const contactId = document.getElementById('contactId')
+        const sendContacts = document.getElementById('sendContacts')
 
         send.forEach(se => {
             se.addEventListener('click',(e)=>{
@@ -237,6 +245,12 @@
         bulkDupli.addEventListener('click', () => {
             formId.setAttribute('action', "{{ route('contact.bulkDuplicate') }}")
             checkSure(formId,'Duplicate them');
+        })
+        sendContacts.addEventListener('click', () => {
+            const recei = document.getElementById('recei')
+
+            formId.setAttribute('action', "{{ route('noti.multiple') }}")
+            emailInput(formId,recei);
         })
 
 

@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\Contact;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class ContactDuplicateController extends Controller
+class SecContactApiController extends Controller
 {
     public function duplicate(Contact $contact){
         $newContact = new Contact();
@@ -21,10 +22,13 @@ class ContactDuplicateController extends Controller
         $newContact->contactPhoto = $contact->contactPhoto;
         $newContact->color = $contact->color;
         $newContact->save();
-        return redirect()->route('contact.index')->with('status',$contact->firstName . " is duplicated");
+        return response()->json([
+            "message"=>"contact is duplicated",
+            "product" => $newContact,
+            "status" => true,
+        ]);
+
     }
-
-
     public function bulkDuplicate(Request $request){
         $arr = $request->check;
         $contactsId = [];
@@ -36,7 +40,8 @@ class ContactDuplicateController extends Controller
         foreach($contactsId as $key=>$value){
             $contacts[$key] = Contact::findOrFail($value);
         }
-         Arr::map($contacts,function($contact,$key){
+
+        Arr::map($contacts,function($contact,$key){
             $newContact[$key] = new Contact();
             $newContact[$key]->firstName = $contact->firstName;
             $newContact[$key]->secondName = $contact->secondName;
@@ -49,6 +54,9 @@ class ContactDuplicateController extends Controller
             $newContact[$key]->color = $contact->color;
             $newContact[$key]->save();
         });
-        return redirect()->route('contact.index')->with('status',"contacts are duplicated");;
+        return response()->json([
+            "message"=>"contacts are duplicated",
+            "status" => true,
+        ]);
     }
 }

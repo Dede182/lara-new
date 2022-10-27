@@ -66,6 +66,7 @@ class SendController extends Controller
         $receiverId = User::where('email',"$request->receiver")->first();
 
 
+
         if($receiverId){
             $receiver= new Receiver();
             $receiver->user_id = $receiverId->id;
@@ -98,30 +99,74 @@ class SendController extends Controller
         $newContact->phone = $contact->phone;
         $newContact->user_id = Auth::user()->id;
         $newContact->color = $contact->color;
-
         if($contact->contactPhoto != null){
-            $newName = uniqid()."contactPhoto.".$contact->contactPhoto;
-            Storage::makeDirectory('public/'.$newContact->folder);
-            $contact->contactPhoto->storeAs('public/'.$newContact->folder.'/',$newName);
-            $newContact->contactPhoto = $newName;
+            $newContact->contactPhoto = $contact->contactPhoto;
         }
 
 
         $newContact->save();
         $send = Send::findOrFail($id);
+        $sender = Sender::findOrFail($send->sender_id);
         $rece = Receiver::findOrFail($send->receiver_id);
+        $sender ->Delete();
         $rece->delete();
         $send->delete();
 
-        return redirect()->route('contact.index')->with('status',$contact->fullName . ' is created successfully');
+        return redirect()->back()->with('status',$contact->fullName . ' is created successfully');
     }
 
     public function reject($id){
         $send = Send::findOrFail($id);
+        $sender = Sender::findOrFail($send->sender_id);
         $rece = Receiver::findOrFail($send->receiver_id);
+        $sender ->Delete();
         $rece->delete();
         $send->delete();
 
-        return redirect()->route('contact.index')->with('status','contact  is rejected successfully');
+        return redirect()->back()->with('status','contact  is rejected successfully');
+    }
+
+    public function sendMultiple(Request $request){
+        $arr = $request->check;
+        $contactsId = [];
+        $contacts = [];
+
+        foreach($arr as $key=>$value){
+            $contactsId[$key] = (int)$value;
+        }
+        foreach($contactsId as $key=>$value){
+            $contacts[$key] = Contact::findOrFail($value);
+        }
+
+         $receiverId = User::where('email',"$request->recei")->first();
+
+        if($receiverId){
+
+                foreach($contacts as $key=>$contact){
+
+                    $receiver[$key]= new Receiver();
+                    $receiver[$key]->user_id = $receiverId->id;
+                    $receiver[$key]->save();
+                    $sender[$key]= new Sender();
+                    $sender[$key]->user_id = Auth::user()->id;;
+                    $sender[$key]->save();
+
+                    $send[$key] = new Send();
+                    $send[$key]->receiver = $receiverId->id;
+                    $send[$key]->sender = Auth::user()->id;
+                    $send[$key]->message = $contact;
+                    $send[$key]->receiver_id = $receiver[$key]->id;
+                    $send[$key]->sender_id = $sender[$key]->id;
+                    $send[$key]->save();
+
+                }
+
+                return redirect()->route('contact.index')->with('status','contacts are sent');
+
+
+
+        }
+        return redirect()->route('contact.index')->with('status','contact not found');
+        return $contactsId;
     }
 }

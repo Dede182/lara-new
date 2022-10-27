@@ -73,6 +73,7 @@ class ContactController extends Controller
         $contact->folder = $request->firstName;
         $contact->email = $request->email;
         $contact->phone = $request->phone;
+        $contact->user_id = Auth::user()->id;
 
         if($request->hasFile('contactPhoto')){
                 $newName = uniqid()."contactPhoto.".$request->file('contactPhoto')->extension();
@@ -127,7 +128,7 @@ class ContactController extends Controller
         $contact->fullName = $request->firstName . " " . $request->secondName;
         $contact->email = $request->email;
         $contact->phone = $request->phone;
-
+        $contact->user_id = Auth::user()->id;
         if($request->hasFile('contactPhoto')){
             $newName = uniqid()."contactPhoto.".$request->file('contactPhoto')->extension();
             Storage::makeDirectory('public/'.$contact->folder);
