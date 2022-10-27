@@ -28,7 +28,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('contacts/sends',[SendApiController::class,'send']);
     Route::post('contacts/multipleSends',[SendApiController::class,'multipleSends']);
     Route::get('contacts/receive',[SendApiController::class,'receive']);
-    Route::get('contacts/sends',[SendApiController::class,'sender']);
+    Route::get('contacts/sends',[SendApiController::class,'sender`']);
 });
 
 Route::post('/register',[ApiAuthController::class,'register'])->name('api.register');
