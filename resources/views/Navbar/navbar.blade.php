@@ -1,4 +1,4 @@
-<nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 w-full">
+<nav class="bg-white border-gray-200 px-2 sm:px-4 py-1 w-full">
     <div class=" flex w-full justify-between items-center ">
         <div class="flex items-center gap-x-3 w-1/4">
             <svg xmlns="http://www.w3.org/2000/svg" id ="sidebar" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
@@ -13,7 +13,9 @@
             </a>
 
         </div>
-
+        <div class="flex justify-start">
+            <lottie-player class="mx-auto" src="{{ asset('lf30_editor_m8de2fxi.json') }}"  background="transparent"  speed="1"  style="width: 100px; height: 100px;"  loop autoplay></lottie-player>
+        </div>
         <div class="w-2/4  ">
 
             <form action="{{ route('contact.index') }}" method="GEt" class="mx-auto">

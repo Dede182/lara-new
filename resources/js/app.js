@@ -1,5 +1,5 @@
 import './bootstrap';
-
+import "@lottiefiles/lottie-player";
 import Alpine from 'alpinejs';
 import 'flowbite';
 import './bootstrap';

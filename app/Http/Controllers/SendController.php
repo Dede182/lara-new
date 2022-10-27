@@ -38,36 +38,17 @@ class SendController extends Controller
         foreach($sendId as $key=>$send){
             $sender[$key] = User::findOrFail($send);
         }
-
-        // $senderSend = [];
-        // foreach($sender as $key=>$singleSender){
-        //     $senderSend[$key] = $singleSender->senders;
-        // }
-        // $senderSend= Arr::collapse($senderSend);
-
-        // $senderRequest = [];
-        // foreach($senderSend as $key=>$ss){
-        //     $senderRequest[$key] = $ss->sends;
-        // }
-        // $senderRequest= Arr::collapse($senderRequest);
-        // $last =[];
-        // foreach($senderRequest as $key=>$l){
-        //     $last[$key] =json_decode($l->message);
-        // }
-        // return ;
-
         return view('Layoutss.noti',compact(['sender']));
     }
 
 
     public function send(Request $request){
-
+        return $request;
         $contact = Contact::findOrFail($request->contactId);
         $receiverId = User::where('email',"$request->receiver")->first();
 
-
-
         if($receiverId){
+
             $receiver= new Receiver();
             $receiver->user_id = $receiverId->id;
             $receiver->save();

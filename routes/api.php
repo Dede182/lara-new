@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auht\ApiAuthController;
 use App\Http\Controllers\Api\ContactApiController;
 use App\Http\Controllers\Api\SecContactApiController;
+use App\Http\Controllers\Api\SendApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,10 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/logout',[ApiAuthController::class,'logout'])->name('api.logout');
     Route::get('contacts/duplicate/{contact}',[SecContactApiController::class,'duplicate']);
     Route::post('contacts/bulkDuplicate',[SecContactApiController::class,'bulkDuplicate']);
+    Route::post('contacts/sends',[SendApiController::class,'send']);
+    Route::post('contacts/multipleSends',[SendApiController::class,'multipleSends']);
+    Route::get('contacts/receive',[SendApiController::class,'receive']);
+    Route::get('contacts/sends',[SendApiController::class,'sender']);
 });
 
 Route::post('/register',[ApiAuthController::class,'register'])->name('api.register');
