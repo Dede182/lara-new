@@ -158,7 +158,6 @@ class ContactController extends Controller
     }
 
     public function bulk(Request $request,Contact $contact){
-        Gate::authorize('delete',$contact);
         $arr = $request->check;
 
         $contactsId = [];
@@ -167,7 +166,9 @@ class ContactController extends Controller
             $contactsId[$key] = (int)$value;
         }
         foreach($contactsId as $key=>$value){
+
             $contacts[$key] = Contact::findOrFail($value);
+            Gate::allowIf(fn()=>Auth::user()->id === $contacts[$key]->user_id);
         }
         foreach($contacts as $key=>$value){
             Storage::deleteDirectory('public/'.$value->firstName);

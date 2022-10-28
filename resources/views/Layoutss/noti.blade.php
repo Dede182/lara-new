@@ -64,7 +64,7 @@
                                         <img src="{{ asset('storage/' . $noti->folder . '/' . $noti->contactPhoto) }}"
                                             class="w-7 h-7 object-cover rounded-[100%]" alt="p" />
                                     @else
-                                        <p class=" !m-0 h-7 w-7 flex items-center justify-center text-xs rounded-[100%]"
+                                        <p class=" !m-0 h-7 w-7 flex items-center justify-center text-white text-xs rounded-[100%]"
                                             style="background:{{ $noti->color }}">
                                             {{ Str::substr($noti->fullName, 0, 1) }}
                                         </p>

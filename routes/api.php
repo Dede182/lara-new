@@ -19,20 +19,23 @@ use App\Http\Controllers\Api\SendApiController;
 |
 */
 
-Route::middleware('auth:sanctum')->group(function(){
+Route::prefix('v1')->middleware('auth:sanctum')->group(function(){
     Route::apiResource('contact',ContactApiController::class);
     Route::post('contact/bulk',[ContactApiController::class,'bulk'])->name('api.contactbulk');
-    Route::get('/logout',[ApiAuthController::class,'logout'])->name('api.logout');
     Route::get('contacts/duplicate/{contact}',[SecContactApiController::class,'duplicate']);
     Route::post('contacts/bulkDuplicate',[SecContactApiController::class,'bulkDuplicate']);
     Route::post('contacts/sends',[SendApiController::class,'send']);
     Route::post('contacts/multipleSends',[SendApiController::class,'multipleSends']);
     Route::get('contacts/receive',[SendApiController::class,'receive']);
     Route::get('contacts/sends',[SendApiController::class,'sender`']);
+    Route::get('/logout',[ApiAuthController::class,'logout'])->name('api.logout');
+    Route::get('/logoutAll',[ApiAuthController::class,'logoutAll']);
+    Route::get('/profile',[ApiAuthController::class,'profile']);
 });
-
-Route::post('/register',[ApiAuthController::class,'register'])->name('api.register');
-Route::post('/login',[ApiAuthController::class,'login'])->name('api.login');
+Route::prefix('v1')->group(function(){
+    Route::post('/register',[ApiAuthController::class,'register'])->name('api.register');
+    Route::post('/login',[ApiAuthController::class,'login'])->name('api.login');
+});
 
 
 

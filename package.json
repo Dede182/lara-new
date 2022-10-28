@@ -20,6 +20,7 @@
     "dependencies": {
         "@lottiefiles/lottie-player": "^1.6.0",
         "flowbite": "^1.5.3",
+        "jquery": "^3.6.1",
         "sweetalert2": "^11.5.2"
     }
 }

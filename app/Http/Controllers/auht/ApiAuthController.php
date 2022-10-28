@@ -30,12 +30,11 @@ class ApiAuthController extends Controller
         $user->userPhoto = $fileName;
     }
     $user->save();
-    // if(Auth::attempt($request->only(['email','password']))){
-    //     $tokens = Auth::user()->createToken('phone')->plainTextToken;
-    //     return response()->json(["token" => $tokens],200);
-    // }
+    if(Auth::attempt($request->only(['email','password']))){
+        $tokens = Auth::user()->createToken('phone')->plainTextToken;
+        return response()->json(['message' => "Register successful",'token'=>$tokens,'success' =>true],200);
+    }
 
-         return response()->json(['message' => "Register successful",'success' =>true],200);
 
    }
    public function login(Request $request){
@@ -59,5 +58,18 @@ class ApiAuthController extends Controller
    public function logout(){
     Auth::user()->currentAccessToken()->delete();
     return response()->json(['message' => 'logout successfully']);
+   }
+
+   public function logoutAll(){
+    Auth::user()->tokens()->delete();
+    return response()->json(['message' => 'all Tokens are removed']);
+   }
+   public function profile(){
+    $user = User::where('id','=',Auth::user()->id)->with(['contacts','receivers','senders'])->get();
+    return response()->json([
+        'message' => "User information",
+        'profile' => $user,
+        'success' => true
+    ]);
    }
 }

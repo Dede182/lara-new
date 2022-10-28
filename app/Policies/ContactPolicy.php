@@ -9,7 +9,6 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class ContactPolicy
 {
     use HandlesAuthorization;
-
     /**
      * Determine whether the user can view any models.
      *
@@ -70,6 +69,11 @@ class ContactPolicy
         return $user->id === $contact->user_id;
     }
 
+    public function bulkDelete(User $user,Contact $contact){
+        foreach($contact as $con){
+            return $user->id === $con->id;
+        }
+    }
     /**
      * Determine whether the user can restore the model.
      *

@@ -1,51 +1,16 @@
 @extends('Layoutss.master')
 @section('content')
 
-    <div class="relative w-full">
-        <button id="dropdownDefault" data-dropdown-toggle="addition" class="text-black "
-            type="button"> <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg></button>
+    <div class="relative w-full ">
 
-        <!-- Dropdown menu -->
-        <div id="addition"
-            class="hidden z-20 w-20 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
-            style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 688px);"
-            data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom">
 
-            <ul class="py-1 text-sm text-gray-500 dark:text-gray-800 divide-y-2"
-                aria-labelledby="dropdownDefault">
-                <li class="py-1 hover:text-black font-bold transition-all">
-                    <button id="submit"
-                    class="text-center w-full ">
-                    Delete
-                </button>
-                </li>
-                <li class="py-1 hover:text-black font-bold transition-all">
-                    <button id="bulkDupli"
-                    class="text-center w-full ">
-                    Duplicate
-                      </button>
-
-                </li>
-                <li class="py-1 hover:text-black font-bold transition-all">
-                    <button id="sendContacts"
-                    class="text-center w-full ">
-                    Send
-                      </button>
-
-                </li>
-            </ul>
-        </div>
         <form id="checkForm" class="mb-3 hidden" method="POST">
             @csrf
             <input id = "recei" type="email" name = "recei" value = ""/>
         </form>
 
 
-        <table class="w-full  {{ $contacts->count() > 0 ? '' : 'hidden' }} text-sm text-left text-gray-500">
+        <table class="w-full  {{ $contacts->count() > 0 ? '' : 'hidden' }} overflow-y-scroll mt-6 text-sm text-left text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
 
                 <tr>
@@ -87,7 +52,7 @@
                                 <img src="{{ asset('storage/' . $contact->folder . '/' . $contact->contactPhoto) }}"
                                     class="w-7 h-7 object-cover rounded-[100%]" alt="p" />
                             @else
-                                <p class=" !m-0 h-7 w-7 flex items-center justify-center text-xs rounded-[100%]"
+                                <p class=" !m-0 h-7 w-7 flex items-center justify-center text-white text-xs rounded-[100%]"
                                     style="background:{{ $contact->color }}">
                                     {{ Str::substr($contact->fullName, 0, 1) }}
                                 </p>
@@ -255,14 +220,18 @@
 
 
         // check all
+
         const checkAll = document.getElementById('checkAll')
         const checks = document.getElementsByName('check[]');
+        $("#dropdownDefault").hide();
         checkAll.addEventListener('change', function() {
             if (this.checked) {
+                $("#dropdownDefault").show();
                 for (let i = 0; i < checks.length; i++) {
                     checks[i].checked = true;
                 }
             } else {
+                $("#dropdownDefault").hide();
                 for (let i = 0; i < checks.length; i++) {
                     checks[i].checked = false;
                 }
