@@ -20,7 +20,7 @@ use App\Http\Controllers\Api\SendApiController;
 */
 
 Route::prefix('v1')->middleware('auth:sanctum')->group(function(){
-    Route::apiResource('contact',ContactApiController::class);
+    Route::apiResource('contacts',ContactApiController::class);
     Route::post('contact/bulk',[ContactApiController::class,'bulk'])->name('api.contactbulk');
     Route::get('contacts/duplicate/{contact}',[SecContactApiController::class,'duplicate']);
     Route::post('contacts/bulkDuplicate',[SecContactApiController::class,'bulkDuplicate']);

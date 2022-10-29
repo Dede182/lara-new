@@ -96,7 +96,7 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
-        Gate::authorize('view',$contact);
+        // Gate::authorize('view',$contact);
         return view('contact.show',compact('contact'));
     }
 
@@ -108,7 +108,7 @@ class ContactController extends Controller
      */
     public function edit(Contact $contact)
     {
-        Gate::authorize('update',$contact);
+        // Gate::authorize('update',$contact);
         return view('contact.edit',compact('contact'));
     }
 
@@ -122,7 +122,7 @@ class ContactController extends Controller
     public function update(UpdateContactRequest $request, Contact $contact)
     {
         // return $contact;
-        Gate::authorize('update',$contact);
+        // Gate::authorize('update',$contact);
         $contact->firstName = $request->firstName;
         $contact->secondName = $request->secondName;
         $contact->fullName = $request->firstName . " " . $request->secondName;
@@ -135,7 +135,7 @@ class ContactController extends Controller
             $request->file('contactPhoto')->storeAs('public/'.$contact->folder.'/',$newName);
             $contact->contactPhoto = $newName;
         }
-
+        // return $request;
         $contact->update();
 
 
@@ -150,7 +150,7 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        Gate::authorize('delete',$contact);
+        // Gate::authorize('delete',$contact);
         Storage::delete('public/'.$contact->firstName.'/'.$contact->contactPhoto);
         Storage::deleteDirectory('public/'.$contact->firstName);
         $contact->delete();
@@ -158,6 +158,11 @@ class ContactController extends Controller
     }
 
     public function bulk(Request $request,Contact $contact){
+        // return $request;
+        $request->validate([
+            'check' => 'required',
+        ]);
+
         $arr = $request->check;
 
         $contactsId = [];
@@ -168,7 +173,7 @@ class ContactController extends Controller
         foreach($contactsId as $key=>$value){
 
             $contacts[$key] = Contact::findOrFail($value);
-            Gate::allowIf(fn()=>Auth::user()->id === $contacts[$key]->user_id);
+            // Gate::allowIf(fn()=>Auth::user()->id === $contacts[$key]->user_id);
         }
         foreach($contacts as $key=>$value){
             Storage::deleteDirectory('public/'.$value->firstName);

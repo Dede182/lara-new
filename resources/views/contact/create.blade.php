@@ -43,29 +43,26 @@
         </div>
     </div>
 @endsection
-
 @push('script')
+    <script>
+         const uploadUi = document.getElementById('uploadUi');
+        const upload = document.getElementById('contactPhoto');
+        // console.log(upload)
+        uploadUi.addEventListener('click', _ => {
+            upload.click();
+            upload.addEventListener('change', (e) => {
+                const readFile = e.target.files[0];
+                // console.log(readFile);
+                const reader = new FileReader();
+                reader.addEventListener('load', (e) => {
+                    console.log(e.target.result);
+                    uploadUi.src = e.target.result;
 
-<script>
-    const uploadUi = document.getElementById('uploadUi');
-    const upload = document.getElementById('contactPhoto');
-    // console.log(upload)
-    uploadUi.addEventListener('click',_=>{
-        upload.click();
-        upload.addEventListener('change',(e)=>{
-            const readFile = e.target.files[0];
-            // console.log(readFile);
-            const reader = new FileReader();
-            reader.addEventListener('load',(e)=>{
-                console.log(e.target.result);
-                uploadUi.src = e.target.result;
 
+                })
+                reader.readAsDataURL(readFile)
 
             })
-            reader.readAsDataURL(readFile)
-
         })
-    })
-</script>
-
+    </script>
 @endpush

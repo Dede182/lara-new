@@ -7,7 +7,7 @@ use App\Models\Contact;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Support\Facades\Schema;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -34,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
         ], function ($view) {
             return $view->with('contactCount',Contact::latest("id")->get());
         });
-
+        Schema::defaultStringLength(191);
         Paginator::useBootstrap();
     }
 }

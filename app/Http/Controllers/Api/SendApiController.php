@@ -49,6 +49,9 @@ class SendApiController extends Controller
     }
 
     public function multipleSends(Request $request){
+        $request->validate([
+            'check' => 'required',
+        ]);
         $arr = $request->check;
         $contactsId = [];
         $contacts = [];

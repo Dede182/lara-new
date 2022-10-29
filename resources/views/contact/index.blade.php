@@ -9,7 +9,6 @@
             <input id = "recei" type="email" name = "recei" value = ""/>
         </form>
 
-
         <table class="w-full  {{ $contacts->count() > 0 ? '' : 'hidden' }} overflow-y-scroll mt-6 text-sm text-left text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
 
@@ -223,6 +222,7 @@
 
         const checkAll = document.getElementById('checkAll')
         const checks = document.getElementsByName('check[]');
+
         $("#dropdownDefault").hide();
         checkAll.addEventListener('change', function() {
             if (this.checked) {
@@ -237,5 +237,13 @@
                 }
             }
         })
+        checks.forEach(check=>{
+            check.addEventListener('change',(e)=>{
+                if(e.target.checked){
+                    $("#dropdownDefault").show();
+                }
+            })
+        })
+
     </script>
 @endpush

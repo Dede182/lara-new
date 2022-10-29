@@ -11,20 +11,18 @@ class input extends Component
     public $label;
 
     public $multiple;
-    public $default;
     public $extra;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($name = "input_name",$type ="text",$label = "Input label",$multiple=false,$default=null,$extra="")
+    public function __construct($name = "input_name",$type ="text",$label = "Input label",$multiple=false,$extra="inp")
     {
         $this->name = $name;
         $this->type = $type;
         $this->label = $label;
         $this->multiple = $multiple;
-        $this->default = $default;
         $this->extra = $extra;
     }
 

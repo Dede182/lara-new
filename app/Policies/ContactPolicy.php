@@ -30,7 +30,7 @@ class ContactPolicy
     public function view(User $user, Contact $contact)
     {
 
-            return $user->id === $contact->user_id;
+            return $user->id == $contact->user_id;
 
     }
 
@@ -54,7 +54,7 @@ class ContactPolicy
      */
     public function update(User $user, Contact $contact)
     {
-        return $user->id === $contact->user_id;
+        return $user->id == $contact->user_id;
     }
 
     /**
@@ -66,12 +66,12 @@ class ContactPolicy
      */
     public function delete(User $user, Contact $contact)
     {
-        return $user->id === $contact->user_id;
+        return $user->id == $contact->user_id;
     }
 
     public function bulkDelete(User $user,Contact $contact){
         foreach($contact as $con){
-            return $user->id === $con->id;
+            return $user->id == $con->id;
         }
     }
     /**

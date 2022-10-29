@@ -30,6 +30,9 @@ class SecContactApiController extends Controller
 
     }
     public function bulkDuplicate(Request $request){
+        $request->validate([
+            'check' => 'required',
+        ]);
         $arr = $request->check;
         $contactsId = [];
         $contacts = [];

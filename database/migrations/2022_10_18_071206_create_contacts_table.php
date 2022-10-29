@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('fullName')->nullable();
             $table->string('email');
             $table->string('folder');
-            $table->string('color')->nullable();
+            $table->string('color')->default("#808080");
             $table->string('phone');
             $table->string('contactPhoto')->nullable();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
